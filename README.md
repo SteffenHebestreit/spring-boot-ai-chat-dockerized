@@ -69,5 +69,3 @@ The backend service requires the following environment variables, which are load
 *   `OPENAI_API_MODEL`: The specific model to be used (e.g., `google_gemma-3-12b-it`).
 
 Make sure your `.env` file is correctly populated before running `docker-compose up`. The `.env.example` file shows the required variables.
-
-**Note:** The `.env` file should be added to your `.gitignore` to prevent committing secrets to your repository.
