@@ -1,0 +1,39 @@
+# Environment variables
+.env
+
+# IDE and editor files
+.vscode/
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Build artifacts
+target/
+build/
+dist/
+out/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Maven
+.mvn/
+mvnw
+mvnw.cmd
+
+# Gradle
+.gradle/
+gradlew
+gradlew.bat
+
+# Log files
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,54 @@
+# syntax=docker/dockerfile:1
+
+# --- Build Stage ---
+# Use an official Node.js runtime as a parent image
+FROM node:20-alpine AS builder
+
+# Install Git
+RUN apk add --no-cache git
+
+WORKDIR /app
+
+# Clone the main branch of the repository
+# Using --depth 1 for a shallow clone to save space and time
+RUN echo "Cloning repository: https://github.com/SteffenHebestreit/ai-chat-frontend.git on branch main" && \
+    git clone --depth 1 --branch main https://github.com/SteffenHebestreit/ai-chat-frontend.git .
+
+# Assuming the repository root contains package.json and vite.config.js for the frontend app
+
+# Install project dependencies
+RUN npm install
+
+# Build the application for production
+# This uses the "build" script from package.json (vite build)
+RUN npm run build
+
+# --- Production Stage ---
+# Use a slim Node.js image for the production stage
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copy built static assets from the builder stage
+# The 'build' directory is specified in vite.config.js (build.outDir)
+COPY --from=builder /app/build ./build
+
+# Copy package.json and vite.config.js.
+# These are needed for 'npm run preview' which uses 'vite preview'.
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/vite.config.js ./vite.config.js
+
+# Copy node_modules from the builder stage.
+# This ensures 'vite' (a devDependency needed for 'vite preview') is available
+# without running a full 'npm install' in the production stage.
+COPY --from=builder /app/node_modules ./node_modules
+
+# Expose the port the app will run on.
+# 'vite preview' defaults to port 4173.
+EXPOSE 4173
+
+# Command to run the application.
+# 'npm run preview' executes 'vite preview' as per package.json.
+# We pass '--host 0.0.0.0' to make the server accessible from outside the container.
+# We also explicitly set '--port 4173'.
+CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0", "--port", "4173"]
