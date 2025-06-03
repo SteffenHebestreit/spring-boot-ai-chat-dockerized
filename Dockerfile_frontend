@@ -19,6 +19,10 @@ RUN echo "Cloning repository: https://github.com/SteffenHebestreit/ai-chat-front
 # Install project dependencies
 RUN npm install
 
+# Accept backend API URL as build argument with default value
+ARG VITE_BACKEND_API_URL=http://localhost:8080/research-agent/api
+ENV VITE_BACKEND_API_URL=${VITE_BACKEND_API_URL}
+
 # Build the application for production
 # This uses the "build" script from package.json (vite build)
 RUN npm run build

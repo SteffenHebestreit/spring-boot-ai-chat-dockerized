@@ -5,14 +5,21 @@ services:
       dockerfile: Dockerfile_backend
     ports:
       - "8080:8080"
-    env_file:
-      - .env
+    volumes:
+      # Mount the application.properties file for quick changes without rebuilding
+      - ./application.properties:/app/config/application.properties
 
   frontend:
     build:
       context: .
       dockerfile: Dockerfile_frontend
+      args:
+        # Pass the backend API URL as a build argument
+        - VITE_BACKEND_API_URL=http://localhost:8080/research-agent/api
     ports:
       - "3000:4173"
+    environment:
+      # Pass the backend API URL as an environment variable at runtime
+      - VITE_BACKEND_API_URL=http://localhost:8080/research-agent/api
     depends_on:
       - backend

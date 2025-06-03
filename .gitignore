@@ -37,3 +37,7 @@ gradlew.bat
 # OS generated files
 .DS_Store
 Thumbs.db
+
+# Spring Boot
+spring-boot-devtools.properties
+application.properties

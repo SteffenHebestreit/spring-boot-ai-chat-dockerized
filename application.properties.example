@@ -1,0 +1,72 @@
+# Default Spring Boot properties
+spring.application.name=ai_research
+
+# OpenAI API Configuration
+openai.api.baseurl=https://api.openai.com/v1
+openai.api.key=your_api_key_here
+openai.api.model=gpt-4
+
+# Agent Card Configuration
+agent.card.id=ai-research-agent-2025
+agent.card.name=Research Assistant Agent
+agent.card.description=An advanced AI research assistant capable of processing text, images, and documents
+agent.card.url=http://localhost:8080/research-agent/api
+agent.card.provider.organization=Your Organization
+agent.card.provider.url=https://example.com
+agent.card.contact_email=contact@example.com
+
+# H2 Database Configuration
+spring.datasource.url=jdbc:h2:./data/airesearch
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=password
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.jpa.hibernate.ddl-auto=update
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+
+# External MCP Servers
+agent.integrations.mcp-servers[0].name=ExternalMCP1
+agent.integrations.mcp-servers[0].url=http://external-mcp-server1.com/api
+
+agent.integrations.mcp-servers[1].name=AnotherMCP
+agent.integrations.mcp-servers[1].url=http://another-mcp.com/mcp
+
+# External A2A Agents (Peers)
+agent.integrations.a2a-peers[0].name=PeerAlpha
+agent.integrations.a2a-peers[0].url=http://localhost:8081
+
+agent.integrations.a2a-peers[1].name=ServiceAgentBeta
+agent.integrations.a2a-peers[1].url=http://localhost:8082
+
+# File Upload Configuration
+spring.servlet.multipart.max-file-size=5MB
+spring.servlet.multipart.max-request-size=8MB
+
+# LLM Configurations - defines which models are available and their capabilities
+# This allows the backend to understand which models support multimodal inputs
+# The frontend can fetch this information to provide appropriate UI and warnings
+
+# Qwen 3 (text-only model with tool use support)
+llm.configurations[0].id=qwen_qwen3-14b
+llm.configurations[0].name=Qwen 3 14B
+llm.configurations[0].supportsText=true
+llm.configurations[0].supportsImage=false
+llm.configurations[0].supportsPdf=false
+llm.configurations[0].notes=Text-only model, no multimodal capabilities but tooluse supported
+
+# Google Gemma 3 (vision-enabled model with image support)
+llm.configurations[1].id=google_gemma-3-12b-it@q4_k_s
+llm.configurations[1].name=Google Gemma 3 12B
+llm.configurations[1].supportsText=true
+llm.configurations[1].supportsImage=true
+llm.configurations[1].supportsPdf=false
+llm.configurations[1].notes=Supports image analysis up to 5MB per image
+
+# DeepSeek R1 0528 Qwen3 8B (text and reasoning model)
+llm.configurations[2].id=deepseek-r1-0528-qwen3-8b
+llm.configurations[2].name=DeepSeek R1 0528 Qwen3 8B
+llm.configurations[2].supportsText=true
+llm.configurations[2].supportsImage=false
+llm.configurations[2].supportsPdf=false
+llm.configurations[2].notes=Text-only model, no multimodal capabilities but reasoning supported
