@@ -8,6 +8,8 @@ services:
     volumes:
       # Mount the application.properties file for quick changes without rebuilding
       - ./application.properties:/app/config/application.properties
+    depends_on:
+      - webcrawl-mcp
 
   frontend:
     build:
@@ -23,3 +25,27 @@ services:
       - VITE_BACKEND_API_URL=http://localhost:8080/research-agent/api
     depends_on:
       - backend
+  
+  webcrawl-mcp:
+    build:
+      context: .
+      dockerfile: Dockerfile_mcp_webcrawl
+    ports:
+      - "3001:3000"
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+          cpus: '1'
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+      - MCP_NAME=WebCrawl MCP
+      - MCP_VERSION=1.0.0
+      - MCP_DESCRIPTION=Web Crawling MCP Server for AI Agents
+      - CRAWL_DEFAULT_MAX_PAGES=10
+      - CRAWL_DEFAULT_DEPTH=3
+      - CRAWL_DEFAULT_STRATEGY=bfs
+      - CRAWL_DEFAULT_WAIT_TIME=1000
+      - LOG_LEVEL=info

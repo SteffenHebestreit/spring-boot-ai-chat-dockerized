@@ -58,6 +58,7 @@ This project consists of a backend service built with Spring Boot and a frontend
     *   Accessible on `http://localhost:8080`.
     *   Configurable through `application.properties` which is mounted as a volume for easy updates.
     *   Supports Agent-to-Agent (A2A) protocol and Model Context Protocol (MCP) for tool integration.
+    *   Depends on the WebCrawl MCP service for web crawling capabilities.
 
 *   **Frontend (`frontend`):**
     *   Built using `Dockerfile_frontend`.
@@ -65,6 +66,14 @@ This project consists of a backend service built with Spring Boot and a frontend
     *   Accessible on `http://localhost:3000` (maps to container port 4173).
     *   Connects to the backend using the `VITE_BACKEND_API_URL` environment variable.
     *   Features a modern UI with animated visualization and markdown support.
+
+*   **WebCrawl MCP (`webcrawl-mcp`):**
+    *   Built using `Dockerfile_mcp_webcrawl`.
+    *   Clones from `https://github.com/SteffenHebestreit/webcrawl-mcp.git`.
+    *   Accessible on `http://localhost:3001` (internal port 3000).
+    *   Provides web crawling capabilities via Model Context Protocol (MCP).
+    *   Includes Puppeteer for browser automation and web scraping.
+    *   Configured with resource limits (1GB memory, 1 CPU) for stability.
 
 ## Configuration Properties
 
@@ -104,22 +113,13 @@ spring.h2.console.path=/h2-console
 ### External MCP Servers
 
 ```properties
-agent.integrations.mcp-servers[0].name=ExternalMCP1
-agent.integrations.mcp-servers[0].url=http://external-mcp-server1.com/api
-
-agent.integrations.mcp-servers[1].name=AnotherMCP
-agent.integrations.mcp-servers[1].url=http://another-mcp.com/mcp
+agent.integrations.mcp-servers[0].name=WebCrawlMCP
+agent.integrations.mcp-servers[0].url=http://webcrawl-mcp:3000
 ```
 
-### External A2A Agents (Peers)
+*Note: The WebCrawl MCP service is now integrated as part of the Docker Compose stack and provides web crawling capabilities to the AI agent.*
 
-```properties
-agent.integrations.a2a-peers[0].name=PeerAlpha
-agent.integrations.a2a-peers[0].url=http://localhost:8081
-
-agent.integrations.a2a-peers[1].name=ServiceAgentBeta
-agent.integrations.a2a-peers[1].url=http://localhost:8082
-```
+*Note: The WebCrawl MCP service is now integrated as part of the Docker Compose stack and provides web crawling capabilities to the AI agent.*
 
 ### File Upload Configuration
 

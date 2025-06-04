@@ -26,18 +26,9 @@ spring.h2.console.enabled=true
 spring.h2.console.path=/h2-console
 
 # External MCP Servers
-agent.integrations.mcp-servers[0].name=ExternalMCP1
-agent.integrations.mcp-servers[0].url=http://external-mcp-server1.com/api
+agent.integrations.mcp-servers[0].name=WebCrawlMCP
+agent.integrations.mcp-servers[0].url=http://webcrawl-mcp:3000
 
-agent.integrations.mcp-servers[1].name=AnotherMCP
-agent.integrations.mcp-servers[1].url=http://another-mcp.com/mcp
-
-# External A2A Agents (Peers)
-agent.integrations.a2a-peers[0].name=PeerAlpha
-agent.integrations.a2a-peers[0].url=http://localhost:8081
-
-agent.integrations.a2a-peers[1].name=ServiceAgentBeta
-agent.integrations.a2a-peers[1].url=http://localhost:8082
 
 # File Upload Configuration
 spring.servlet.multipart.max-file-size=5MB

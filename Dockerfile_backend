@@ -8,6 +8,7 @@ RUN git clone https://github.com/SteffenHebestreit/spring_boot_ai_agent.git /app
 WORKDIR /app
 
 # Build the application
+RUN mvn clean install -DskipTests
 RUN mvn clean package -DskipTests
 
 # Use a smaller base image for the final stage
@@ -15,7 +16,7 @@ FROM eclipse-temurin:21-jre-jammy
 WORKDIR /app
 
 # Copy the built artifact from the builder stage
-COPY --from=builder /app/target/ai_research-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=builder /app/target/ai_research-1.1.0-SNAPSHOT.jar app.jar
 
 # Create a directory for configuration
 RUN mkdir -p /app/config
