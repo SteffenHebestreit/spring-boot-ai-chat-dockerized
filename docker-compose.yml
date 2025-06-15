@@ -8,6 +8,7 @@ services:
     volumes:
       # Mount the application.properties file for quick changes without rebuilding
       - ./application.properties:/app/config/application.properties
+      - ./role.yml:/app/config/role.yaml
     depends_on:
       - webcrawl-mcp
 

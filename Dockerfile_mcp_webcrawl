@@ -66,7 +66,10 @@ ENV NODE_ENV=production \
     # Don't skip Chrome download - we need it for puppeteer
     PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=false \
     # Set a cache directory for Puppeteer downloads inside the container
-    PUPPETEER_CACHE_DIR=/app/.cache/puppeteer
+    PUPPETEER_CACHE_DIR=/app/.cache/puppeteer \
+    # Set environment variables for Chromium
+    XDG_CONFIG_HOME=/tmp/.chromium \
+    XDG_DATA_HOME=/tmp/.chromium
 
 # Create non-root user
 RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser
